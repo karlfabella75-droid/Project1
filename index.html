@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#111820">
+	<meta name="description" content="RTT — Run Time Terrors. Your Kabisayaan Site.">
+	<title>RTT — Run Time Terrors</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+	<script src="supabase-config.js" defer></script>
+	<script src="script.js" defer></script>
+</head>
+<body>
+	<main class="auth-screen" id="join-screen">
+		<a class="brand auth-brand" href="#home" aria-label="RTT — Run Time Terrors home">
+			<span class="brand-mark" aria-hidden="true">RTT</span>
+			<span><strong>RTT</strong><small>RUN TIME TERRORS</small></span>
+		</a>
+		<section class="auth-card">
+			<p class="eyebrow">YOUR FRIENDS. YOUR COMMUNITY.</p>
+			<h1>Get connected.</h1>
+			<p class="auth-intro">A place for the people, ideas, and moments that make RTT.</p>
+			<div class="auth-tabs" role="tablist" aria-label="Account access">
+				<button class="auth-tab active" id="login-tab" type="button" role="tab" aria-selected="true" aria-controls="auth-panel" data-mode="login">Log in</button>
+				<button class="auth-tab" id="signup-tab" type="button" role="tab" aria-selected="false" aria-controls="auth-panel" data-mode="signup">Sign up</button>
+			</div>
+			<form id="join-form">
+				<div id="auth-panel" role="tabpanel" aria-labelledby="login-tab">
+					<div class="auth-name-field" id="signup-name-field" hidden>
+						<label for="display-name">Display name</label>
+						<input id="display-name" name="displayName" type="text" maxlength="50" autocomplete="nickname" placeholder="Your name or a nickname">
+					</div>
+					<label for="email">Email address</label>
+					<input id="email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="you@example.com" required>
+					<label for="password">Password</label>
+					<input id="password" name="password" type="password" minlength="8" maxlength="72" autocomplete="current-password" placeholder="At least 8 characters" required>
+				</div>
+				<p class="auth-status" id="join-status" role="status" aria-live="polite">Log in or create an account to join your community.</p>
+				<button class="post-button auth-submit" id="auth-submit" type="submit">Log in <span aria-hidden="true">↗</span></button>
+			</form>
+			<p class="auth-footnote">Your email is used to sign in and isn’t shown on your public profile. Choose a display name you’re comfortable sharing.</p>
+		</section>
+		<p class="auth-footer">RTT — Run Time Terrors · Built for the community.</p>
+	</main>
+
+	<div class="app-shell" id="app-shell" hidden>
+	<header class="topbar">
+		<a class="brand" href="#home" data-view="feed" aria-label="RTT — Run Time Terrors home">
+			<span class="brand-mark" aria-hidden="true">RTT</span>
+			<span><strong>RTT</strong><small>RUN TIME TERRORS</small></span>
+		</a>
+		<label class="search-box">
+			<span aria-hidden="true">⌕</span>
+			<input id="search-input" type="search" placeholder="Find a post or topic" aria-label="Find a post or topic">
+		</label>
+		<div class="topbar-right">
+			<span class="campus-label"><span class="online-dot"></span> RTT NETWORK</span>
+			<button class="icon-button" type="button" data-view="notifications" aria-label="Notifications">♧<span class="nav-badge" id="notification-count" hidden></span></button>
+			<button class="icon-button" type="button" data-view="messages" aria-label="Messages">✉<span class="nav-badge" id="message-count" hidden></span></button>
+			<span class="signed-in-name" id="signed-in-name"></span>
+			<button class="avatar-button" type="button" data-view="profile" aria-label="Open your profile"><span class="avatar avatar-you" id="signed-in-avatar">Y</span></button>
+			<button class="sign-out-button" id="sign-out" type="button">Sign out</button>
+		</div>
+	</header>
+
+	<main class="layout" id="home">
+		<aside class="left-column">
+			<section class="welcome-card">
+				<p class="eyebrow" id="today-label"></p>
+				<p class="welcome-kicker">THE STUDENT NETWORK</p>
+				<h1>Run with<br><em>your people.</em></h1>
+				<p>Updates, ideas, and life. All in one place.</p>
+				<div class="welcome-decoration" aria-hidden="true"><span></span><span></span><span></span></div>
+			</section>
+
+			<nav class="side-nav" aria-label="Feed categories">
+				<p class="eyebrow">YOUR FEED</p>
+				<button class="nav-item active" type="button" data-filter="all" aria-pressed="true"><span>⌂</span> RTT home</button>
+				<button class="nav-item" type="button" data-filter="Study" aria-pressed="false"><span>▤</span> Study</button>
+				<button class="nav-item" type="button" data-filter="Life Update" aria-pressed="false"><span>◈</span> Life Update</button>
+				<button class="nav-item" type="button" data-filter="Wins" aria-pressed="false"><span>▲</span> Wins</button>
+				<button class="nav-item" type="button" data-filter="Questions" aria-pressed="false"><span>?</span> Questions</button>
+			</nav>
+			<nav class="side-nav social-nav" aria-label="Community">
+				<p class="eyebrow">COMMUNITY</p>
+				<button class="nav-item" type="button" data-view="groups"><span>◫</span> Study groups</button>
+				<button class="nav-item" type="button" data-view="events"><span>▦</span> Campus events</button>
+				<button class="nav-item" type="button" data-view="leaderboard"><span>↗</span> Leaderboard</button>
+				<button class="nav-item" type="button" data-view="profile"><span>◉</span> My profile</button>
+				<button class="nav-item" type="button" data-view="settings"><span>⚙</span> Settings</button>
+				<button class="nav-item admin-nav-item" type="button" data-view="admin" hidden><span>⌘</span> Admin tools</button>
+			</nav>
+
+			<section class="side-note">
+				<span class="note-flower" aria-hidden="true">//</span>
+				<p><strong>RTT code</strong><br>Show up. Back your people. Keep it respectful.</p>
+			</section>
+			<p class="side-footer">RTT — RUN TIME TERRORS · <span id="year-label"></span></p>
+		</aside>
+
+		<section class="feed-column" aria-label="Campus community feed">
+			<div class="feed-heading">
+				<div><p class="eyebrow">RTT — RUN TIME TERRORS</p><h2 id="feed-title">RTT Home</h2></div>
+				<span class="member-count"><span class="online-dot"></span> YOUR NETWORK</span>
+			</div>
+
+			<form class="composer card" id="post-form">
+				<div class="composer-top">
+					<div class="avatar avatar-you" id="composer-avatar">Y</div>
+					<label class="composer-label" for="post-content">What’s happening?</label>
+				</div>
+				<textarea id="post-content" name="content" maxlength="700" placeholder="Share an update with the RTT community..." required></textarea>
+				<div class="composer-extras">
+					<label class="upload-control">▧ <span id="post-image-label">Add photo</span><input id="post-image" type="file" accept="image/jpeg,image/png,image/webp,image/gif" aria-label="Choose a photo for your post"></label>
+					<button class="text-button post-image-clear" id="clear-post-image" type="button" hidden>Remove photo</button>
+					<img class="post-image-preview" id="post-image-preview" alt="Selected post photo preview" hidden>
+					<label class="poll-toggle"><input id="poll-enabled" type="checkbox"> Add a poll</label>
+					<input id="post-link" class="link-input" type="url" maxlength="500" placeholder="Add a link (optional)" aria-label="Add a link">
+				</div>
+				<div class="poll-fields" id="poll-fields" hidden>
+					<input id="poll-question" type="text" maxlength="180" placeholder="Poll question" aria-label="Poll question">
+					<div class="poll-option-fields">
+						<input class="poll-option" type="text" maxlength="80" placeholder="Option 1" aria-label="Poll option 1">
+						<input class="poll-option" type="text" maxlength="80" placeholder="Option 2" aria-label="Poll option 2">
+					</div>
+					<button class="text-button add-poll-option" id="add-poll-option" type="button">+ Add option</button>
+				</div>
+				<div class="composer-bottom">
+					<label class="category-picker" for="post-category"><span aria-hidden="true">#</span>
+						<select id="post-category" name="category" aria-label="Post category">
+							<option value="Life Update">Life Update</option>
+							<option value="Study">Study</option>
+							<option value="Wins">Wins</option>
+							<option value="Questions">Questions</option>
+						</select>
+					</label>
+					<button class="post-button" type="submit">Post update <span aria-hidden="true">↗</span></button>
+				</div>
+				<p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+			</form>
+
+			<div class="feed-tools">
+				<h3>Latest updates <span aria-hidden="true">/</span></h3>
+				<div class="feed-controls">
+					<label class="sort-picker">Showing
+						<select id="sort-select" aria-label="Feed view">
+							<option value="newest">For you · recent</option>
+							<option value="following">Following</option>
+							<option value="trending">Trending</option>
+							<option value="saved">Bookmarks</option>
+						</select>
+					</label>
+					<label class="sort-picker">Sort
+						<select id="order-select" aria-label="Sort posts">
+							<option value="newest">Newest</option>
+							<option value="liked">Most loved</option>
+						</select>
+					</label>
+				</div>
+			</div>
+			<div class="post-feed" id="post-feed" aria-live="polite"></div>
+			<p class="empty-feed" id="empty-feed" hidden>No updates yet. Be the first to post.</p>
+			<p class="storage-note">Posts are visible to signed-in community members. Please don’t share private information.</p>
+		</section>
+		<section class="feature-view" id="feature-view" aria-live="polite" hidden></section>
+
+		<aside class="right-column">
+			<section class="campus-card card">
+				<div class="campus-card-heading"><span class="eyebrow">RTT COMMUNITY</span><span aria-hidden="true">///</span></div>
+				<h2>Make your mark.</h2>
+				<div class="campus-item"><span class="item-icon green">01</span><p><strong>Stay in the loop</strong><small>Catch up on what’s happening.</small></p></div>
+				<div class="campus-item"><span class="item-icon peach">02</span><p><strong>Build your circle</strong><small>Find your people and study crew.</small></p></div>
+				<div class="campus-item"><span class="item-icon lilac">03</span><p><strong>Bring something to it</strong><small>Share an idea, question, or win.</small></p></div>
+			</section>
+			<section class="community-card">
+				<p class="eyebrow">THE RTT STANDARD</p>
+				<h3>Respect the crew.<br>Raise the bar.</h3>
+				<p>Keep it real, give people respect, and help make this a place everyone wants to be.</p>
+				<div class="community-doodle" aria-hidden="true">RTT</div>
+			</section>
+			<p class="right-footer">Built with care, one post at a time.</p>
+		</aside>
+	</main>
+	<nav class="mobile-nav" aria-label="Mobile navigation">
+		<button type="button" data-view="feed" class="active"><span>⌂</span>Feed</button>
+		<button type="button" data-view="groups"><span>◫</span>Groups</button>
+		<button type="button" data-view="events"><span>▦</span>Events</button>
+		<button type="button" data-view="messages"><span>✉</span>Messages</button>
+		<button type="button" data-view="notifications"><span>♧</span>Alerts</button>
+		<button type="button" data-view="settings"><span>⚙</span>Settings</button>
+	</nav>
+	</div>
+</body>
+</html>
